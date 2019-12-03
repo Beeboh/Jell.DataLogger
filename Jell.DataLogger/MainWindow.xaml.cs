@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Jell.DataLogger.Gui
+namespace Jell.DataLogger
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

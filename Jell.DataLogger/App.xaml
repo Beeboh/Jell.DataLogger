@@ -1,7 +1,7 @@
-﻿<Application x:Class="Jell.DataLogger.Gui.App"
+﻿<Application x:Class="Jell.DataLogger.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Jell.DataLogger.Gui"
+             xmlns:local="clr-namespace:Jell.DataLogger"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

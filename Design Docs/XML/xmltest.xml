@@ -1,0 +1,10 @@
+<Animals>
+  <Pigs>
+    <Pig name="Joe" weight="178"/>
+    <Pig name="Bob" weight="201"/>
+  <Pigs/>
+  <Cows>
+    <Cow name="Henry" weight="280"/>
+    <Cow name="Susan" weight="226"/>
+  <Cows/>
+<Animals/>

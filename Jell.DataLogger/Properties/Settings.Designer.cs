@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Jell.DataLogger.Gui.Properties
+namespace Jell.DataLogger.Properties
 {
 
 
