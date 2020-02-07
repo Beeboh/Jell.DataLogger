@@ -1,0 +1,104 @@
+﻿<Window x:Class="Jell.DataLogger.Gui.Windows.RecordNewData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jell.DataLogger.Gui.Windows"
+        mc:Ignorable="d"
+        Title="RecordData" Height="700" Width="700">
+    <Border Padding="5">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="170"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Start Time" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5" Grid.Column="0" Grid.Row="0"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+                    <Calendar HorizontalAlignment="Center"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Margin="5,5,0,5" Width="90" Text="0" />
+
+                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Hour" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20" />
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="Minute" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="1" Grid.Column="0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20"/>
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="AM/PM" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="2" Grid.Column="0"/>
+                            <ComboBox Width="48" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5">
+                                <ComboBoxItem Content="AM" IsSelected="True"/>
+                                <ComboBoxItem Content="PM"/>
+                            </ComboBox>
+                        </Grid>
+
+
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Text="End Time" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5" Grid.Column="1" Grid.Row="0" />
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                    <Calendar HorizontalAlignment="Left"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Margin="5,5,0,5" Width="90" Text="0" />
+
+                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Hour" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20" />
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="Minute" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="1" Grid.Column="0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20"/>
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="AM/PM" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="2" Grid.Column="0"/>
+                            <ComboBox Width="48" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5">
+                                <ComboBoxItem Content="AM" IsSelected="True"/>
+                                <ComboBoxItem Content="PM"/>
+                            </ComboBox>
+                        </Grid>
+
+
+                    </StackPanel>
+                </StackPanel>
+                
+            </Grid>
+
+            
+
+        </StackPanel>
+    </Border>
+    
+</Window>

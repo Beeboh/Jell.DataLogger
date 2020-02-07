@@ -6,8 +6,32 @@
         xmlns:local="clr-namespace:Jell.DataLogger.Gui.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="900" Width="900">
-    <Grid Background="White">
+        Title="MainWindow" Height="400" Width="400">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Name="menuExit" Header="_Exit" Click="menuExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Device">
+                <MenuItem Name="menuConnect"  Header="Connect" Click="menuConnect_Click" IsEnabled="{Binding Disconnected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <MenuItem Name="menuDisconnect" Header="Disconnect" Click="menuDisconnect_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Record">
+                <MenuItem Name="menuRecordNewData" Header="Record New Data" Click="menuRecordNewData_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Export">
+                <MenuItem Name="menuExportToExcel" Header="Export to Excel"/>
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </DockPanel>
+    
+    <!--<Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -45,7 +69,7 @@
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="0" Grid.ColumnSpan="15" Fill="Blue"/>
         
-        <!--Top Buttons-->
+        --><!--Top Buttons--><!--
         <Grid Grid.Column="5" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -57,7 +81,7 @@
         <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="14" Background="Gray">
             
         </DockPanel>
-    </Grid>
+    </Grid>-->
         
         
         
