@@ -22,6 +22,152 @@
                     <Calendar HorizontalAlignment="Center"/>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
+                            <TextBox Margin="5,5,0,5" Width="90" TextAlignment="Center" Text="00:00 AM" />
+
+                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Hour" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20" />
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="Minute" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="1" Grid.Column="0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20"/>
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="AM/PM" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="2" Grid.Column="0"/>
+                            <ComboBox Width="48" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5">
+                                <ComboBoxItem Content="AM" IsSelected="True"/>
+                                <ComboBoxItem Content="PM"/>
+                            </ComboBox>
+                        </Grid>
+
+
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Text="End Time" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5" Grid.Column="1" Grid.Row="0" />
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                    <Calendar HorizontalAlignment="Left"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Margin="5,5,0,5" Width="90" TextAlignment="Center" Text="00:00 AM" />
+
+                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Hour" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20" />
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="Minute" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="1" Grid.Column="0"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                <Button Margin="0,5,0,5" Content="˄" Width="20"/>
+                                <Button Margin="0,5,0,5"  Content="˅" Width="20"/>
+                            </StackPanel>
+                            <TextBlock Text="AM/PM" VerticalAlignment="Center" Margin="5 0 5 0" Grid.Row="2" Grid.Column="0"/>
+                            <ComboBox Width="48" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5">
+                                <ComboBoxItem Content="AM" IsSelected="True"/>
+                                <ComboBoxItem Content="PM"/>
+                            </ComboBox>
+                        </Grid>
+
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                </Grid.RowDefinitions>
+                <TextBlock Text=" Sampling Rate Δt" HorizontalAlignment="Center" Margin="6,24,223,156" Grid.Column="0" Grid.Row="0" Width="112" TextAlignment="Left"/>
+                <ComboBox Grid.Row="0" Grid.Column="0" Margin="114,24,153,155" RenderTransformOrigin="-0.257,0.476">
+                    <ComboBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ComboBox.RenderTransform>
+                    <ComboBoxItem Content="5 sec"/>
+                    <ComboBoxItem Content="10 sec"/>
+                    <ComboBoxItem Content="30 sec"/>
+                    <ComboBoxItem Content="1 min"/>
+                    <ComboBoxItem Content="5 min"/>
+                    <ComboBoxItem Content="10 min"/>
+                    <ComboBoxItem Content="15 min"/>
+                    <ComboBoxItem Content="30 min"/>
+                    <ComboBoxItem Content="1 hour"/>
+                </ComboBox>
+
+                <TextBlock Text="Sampling Rate and Battery Life" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,0,0,180" Grid.Row="0" Width="341" TextAlignment="Center" />
+                <TextBox Margin="141,49,153,131" TextAlignment="Center" Text="0.00 V" RenderTransformOrigin="0.525,0.05" />
+                <TextBlock Text=" Current Battery Voltage" HorizontalAlignment="Center" Grid.Row="0" Height="20" Margin="6,0,191,131" VerticalAlignment="Bottom" Width="144"/>
+                <TextBlock Text=" Battery Life Remaining" HorizontalAlignment="Center" Grid.Row="0" Height="20" Margin="6,0,191,106" VerticalAlignment="Bottom" Width="144"/>
+                <TextBox Margin="136,74,153,106" TextAlignment="Center" Text="00:00" RenderTransformOrigin="0.5,1.125" />
+
+                <Button Margin="210,411,22,-249" Content="Set Parameters" FontWeight="Bold" Grid.Column="1" />
+
+
+            </Grid>
+
+
+
+        </StackPanel>
+    </Border>
+
+</Window>
+
+
+
+<!--<Window x:Class="Jell.DataLogger.Gui.Windows.RecordNewData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jell.DataLogger.Gui.Windows"
+        mc:Ignorable="d"
+        Title="RecordData" Height="700" Width="700">
+    <Border Padding="5">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="170"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Start Time" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5" Grid.Column="0" Grid.Row="0"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+                    <Calendar HorizontalAlignment="Center"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
                             <TextBox Margin="5,5,0,5" Width="90" Text="0" />
 
                         </StackPanel>
@@ -101,4 +247,4 @@
         </StackPanel>
     </Border>
     
-</Window>
+</Window>-->
