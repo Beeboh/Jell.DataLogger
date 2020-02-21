@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace Jell.DataLogger.Gui.Views
 {
     /// <summary>
-    /// Interaction logic for RedView.xaml
+    /// Interaction logic for GraphView.xaml
     /// </summary>
-    public partial class RedView : UserControl
+    public partial class GraphView : UserControl
     {
-        public RedView()
+        public GraphView()
         {
             InitializeComponent();
+
         }
     }
 }

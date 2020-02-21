@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Jell.DataLogger.Gui.Views
 {
     /// <summary>
-    /// Interaction logic for ConnectedScreen.xaml
+    /// Interaction logic for DisconnectedView.xaml
     /// </summary>
-    public partial class ConnectedScreen : UserControl
+    public partial class DisconnectedView : UserControl
     {
-        public ConnectedScreen()
+        public DisconnectedView()
         {
             InitializeComponent();
         }

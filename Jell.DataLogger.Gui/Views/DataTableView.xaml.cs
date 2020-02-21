@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Jell.DataLogger.Gui.Views
 {
     /// <summary>
-    /// Interaction logic for BlueView.xaml
+    /// Interaction logic for DataTableView.xaml
     /// </summary>
-    public partial class BlueView : UserControl
+    public partial class DataTableView : UserControl
     {
-        public BlueView()
+        public DataTableView()
         {
             InitializeComponent();
         }

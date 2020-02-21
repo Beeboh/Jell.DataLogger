@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Jell.DataLogger.Gui.ViewModels
 {
-    public class RedViewModel
+    public class DisconnectedViewModel
     {
+
     }
 }

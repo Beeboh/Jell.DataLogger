@@ -3,10 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Jell.DataLogger.Gui.ViewModels"
+        xmlns:views="clr-namespace:Jell.DataLogger.Gui.Views"
         xmlns:local="clr-namespace:Jell.DataLogger.Gui.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="400" Width="400">
+        Title="MainWindow" Height="400" Width="800">
+    <Window.Resources>
+        <DataTemplate  x:Name="DataTableViewTemplate" DataType="{x:Type viewmodels:DataTableViewModel}">
+            <views:DataTableView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate  x:Name="DisconnectedViewTemplate" DataType="{x:Type viewmodels:DisconnectedViewModel}">
+            <views:DisconnectedView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -20,14 +30,11 @@
                 <MenuItem Name="menuRecordNewData" Header="Record New Data" Click="menuRecordNewData_Click"/>
             </MenuItem>
             <MenuItem Header="_Export">
-                <MenuItem Name="menuExportToExcel" Header="Export to Excel"/>
+                <MenuItem Name="menuExportToExcel" Header="Export to Excel" Click="menuExportToExcel_Click"/>
             </MenuItem>
         </Menu>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            <ContentControl Name="cctrlMain" Content="{Binding}"/>
         </Grid>
     </DockPanel>
     
