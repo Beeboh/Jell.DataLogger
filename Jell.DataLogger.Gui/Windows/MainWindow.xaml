@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:Jell.DataLogger.Gui.ViewModels"
         xmlns:views="clr-namespace:Jell.DataLogger.Gui.Views"
+        
         xmlns:local="clr-namespace:Jell.DataLogger.Gui.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -16,6 +17,7 @@
         <DataTemplate  x:Name="DisconnectedViewTemplate" DataType="{x:Type viewmodels:DisconnectedViewModel}">
             <views:DisconnectedView DataContext="{Binding}"/>
         </DataTemplate>
+        
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">

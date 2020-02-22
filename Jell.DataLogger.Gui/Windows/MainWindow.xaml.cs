@@ -12,10 +12,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO.Ports;
 using Excel = Microsoft.Office.Interop.Excel;
 using Jell.DataLogger.Gui.ViewModels;
 using Jell.DataLogger.Core.Models;
 using Jell.DataLogger.Testing; //remove eventually
+
 
 namespace Jell.DataLogger.Gui.Windows
 {
@@ -61,7 +63,7 @@ namespace Jell.DataLogger.Gui.Windows
             DisconnectedMenuItems = GetDisconnectedMenuItems();
             Disconnect();
         }
-        private void Connect()
+        private void Connect(string portName)
         {
             //Edit this
             ParDataGenerator DataGenerator = new ParDataGenerator();
@@ -123,7 +125,13 @@ namespace Jell.DataLogger.Gui.Windows
         //Buttons
         private void menuConnect_Click(object sender, RoutedEventArgs e)
         {
-            Connect();
+            ConnectionWindow connectionWindow = new ConnectionWindow();
+            connectionWindow.ShowDialog();
+            if (connectionWindow.WasCompleted)
+            {
+                Connect(connectionWindow.PortName);
+            }
+                
             
         }
         private void menuDisconnect_Click(object sender, RoutedEventArgs e)
