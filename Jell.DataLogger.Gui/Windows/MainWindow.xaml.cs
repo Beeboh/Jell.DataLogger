@@ -15,8 +15,11 @@ using System.Windows.Shapes;
 using System.IO.Ports;
 using Excel = Microsoft.Office.Interop.Excel;
 using Jell.DataLogger.Gui.ViewModels;
+using Jell.DataLogger.Gui.Services;
 using Jell.DataLogger.Core.Models;
 using Jell.DataLogger.Testing; //remove eventually
+using System.Xml;
+using System.Xml.Linq;
 
 
 namespace Jell.DataLogger.Gui.Windows
@@ -65,13 +68,42 @@ namespace Jell.DataLogger.Gui.Windows
         }
         private void Connect(string portName)
         {
-            //Edit this
+            //Delete this eventually
             ParDataGenerator DataGenerator = new ParDataGenerator();
             ReadOnlyCollection<ParData> DataCollection = DataGenerator.Generate(DateTime.Now, 1000, 5);
-            DataContext = new DataTableViewModel(DataCollection);
-            ParData = DataCollection;
-            ConnectedMode = true;
+            //Delete this eventually
 
+            ////tempt
+            //SerialPort port = new SerialPort(portName, 9600);
+            //port.DtrEnable = true;
+            //port.ReadTimeout = 5000;
+            //port.WriteTimeout = 5000;
+            //port.Open();
+            //port.WriteLine("Requesting data");
+            //string DataString = null;
+            //try
+            //{
+            //    DataString = port.ReadLine();
+            //    MessageBox.Show(DataString);
+            //}
+            //catch (TimeoutException ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+            //port.Close();
+
+            string datastring = "<Data year='2020' month='03' day='05' hour='09' minute='15' second='45'><Voltage1>1</Voltage1><Voltage2>2</Voltage2><Voltage3>3</Voltage3><Voltage4>4</Voltage4><Voltage5>5</Voltage5><Voltage6>6</Voltage6></Data><Data year='2020' month='03' day='05' hour='10' minute='20' second='45'><Voltage1>10</Voltage1><Voltage2>20</Voltage2><Voltage3>30</Voltage3><Voltage4>40</Voltage4><Voltage5>50</Voltage5><Voltage6>60</Voltage6></Data>";
+            DataParser dataParser = new DataParser();
+            try
+            {
+                ReadOnlyCollection<ParData> parData = dataParser.Parse(datastring);
+                DataContext = new DataTableViewModel(parData);
+                ConnectedMode = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error Parsing device data.\n\n Message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void Disconnect()
         {

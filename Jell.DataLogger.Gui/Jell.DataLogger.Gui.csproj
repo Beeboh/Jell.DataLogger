@@ -70,6 +70,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Services\CsvExporter.cs" />
+    <Compile Include="Services\DataParser.cs" />
     <Compile Include="Services\ExcelExporter.cs" />
     <Compile Include="ViewModels\DataTableViewModel.cs" />
     <Compile Include="ViewModels\DisconnectedViewModel.cs" />
