@@ -23,12 +23,12 @@ namespace Jell.DataLogger.Testing
             List<ParData> DataCollection = new List<ParData>();
             for (int i = 0; i<numberofpoints; i++)
             {
-                SensorRecording sensor1 = new SensorRecording(Random.Next(0, 5));
-                SensorRecording sensor2 = new SensorRecording(Random.Next(0, 5));
-                SensorRecording sensor3 = new SensorRecording(Random.Next(0, 5));
-                SensorRecording sensor4 = new SensorRecording(Random.Next(0, 5));
-                SensorRecording sensor5 = new SensorRecording(Random.Next(0, 5));
-                SensorRecording sensor6 = new SensorRecording(Random.Next(0, 5));
+                SensorRecording sensor1 = new SensorRecording(Random.Next(0, 4095));
+                SensorRecording sensor2 = new SensorRecording(Random.Next(0, 4095));
+                SensorRecording sensor3 = new SensorRecording(Random.Next(0, 4095));
+                SensorRecording sensor4 = new SensorRecording(Random.Next(0, 4095));
+                SensorRecording sensor5 = new SensorRecording(Random.Next(0, 4095));
+                SensorRecording sensor6 = new SensorRecording(Random.Next(0, 4095));
                 DateTime time = starttime.AddSeconds(i * secondsinterval);
                 ParData Data = new ParData(time, sensor1, sensor2, sensor3, sensor4, sensor5, sensor6);
                 DataCollection.Add(Data);

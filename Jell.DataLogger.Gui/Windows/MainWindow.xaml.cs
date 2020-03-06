@@ -29,6 +29,7 @@ namespace Jell.DataLogger.Gui.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         private bool _connectedmode;
         private bool ConnectedMode
         {
@@ -49,7 +50,8 @@ namespace Jell.DataLogger.Gui.Windows
         private MenuItem[] ConnectedMenuItems { get; }
         private MenuItem[] DisconnectedMenuItems { get; }
         private ReadOnlyCollection<ParData> ParData { get; set; }
-        
+        private CsvExporter CsvExporter { get; } = new CsvExporter();
+
         //{
         //    get { return _connectedmode; }
         //    set
@@ -70,41 +72,48 @@ namespace Jell.DataLogger.Gui.Windows
         {
             //Delete this eventually
             ParDataGenerator DataGenerator = new ParDataGenerator();
-            ReadOnlyCollection<ParData> DataCollection = DataGenerator.Generate(DateTime.Now, 1000, 5);
-            //Delete this eventually
+            ReadOnlyCollection<ParData> RandomlyGeneratedData = DataGenerator.Generate(DateTime.Now, 1000, 5);
 
-            //tempt
-            SerialPort port = new SerialPort(portName, 9600);
-            port.DtrEnable = true;
-            port.ReadTimeout = 5000;
-            port.WriteTimeout = 5000;
-            port.Open();
-            port.WriteLine("0001");
-            string datastring = null;
             try
             {
-                datastring = port.ReadLine();
-                MessageBox.Show(datastring);
+                SerialPort port = new SerialPort(portName, 9600);
+                port.DtrEnable = true;
+                port.ReadTimeout = 5000;
+                port.WriteTimeout = 5000;
+                port.Open();
+                port.WriteLine("0001");
+                string datastring = null;
+                try
+                {
+                    ParXmlFormatter parXmlFormatter = new ParXmlFormatter();
+                    datastring = parXmlFormatter.GetString(RandomlyGeneratedData);
+
+                    //datastring = port.ReadLine();
+                    port.Close();
+                    DataParser dataParser = new DataParser();
+                    try
+                    {
+                        ParData = dataParser.Parse(datastring);
+                        DataContext = new DataTableViewModel(ParData);
+                        ConnectedMode = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error Parsing device data.\n\n Message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (TimeoutException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
-            catch (TimeoutException ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            port.Close();
 
-            //hardcoded value
-            //string datastring = "<Data year='2020' month='03' day='05' hour='09' minute='15' second='45'><Voltage1>1</Voltage1><Voltage2>2</Voltage2><Voltage3>3</Voltage3><Voltage4>4</Voltage4><Voltage5>5</Voltage5><Voltage6>6</Voltage6></Data><Data year='2020' month='03' day='05' hour='10' minute='20' second='45'><Voltage1>10</Voltage1><Voltage2>20</Voltage2><Voltage3>30</Voltage3><Voltage4>40</Voltage4><Voltage5>50</Voltage5><Voltage6>60</Voltage6></Data>";
-            DataParser dataParser = new DataParser();
-            try
-            {
-                ReadOnlyCollection<ParData> parData = dataParser.Parse(datastring);
-                DataContext = new DataTableViewModel(parData);
-                ConnectedMode = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error Parsing device data.\n\n Message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
         }
         private void Disconnect()
         {
@@ -112,6 +121,16 @@ namespace Jell.DataLogger.Gui.Windows
             ParData = null;
             ConnectedMode = false;
         }
+
+        private MenuItem[] GetConnectedMenuItems()
+        {
+            return new MenuItem[] { menuDisconnect, menuRecordNewData, menuExportToCsv };
+        }
+        private MenuItem[] GetDisconnectedMenuItems()
+        {
+            return new MenuItem[] { menuConnect };
+        }
+        [Obsolete]
         private void ExportToExcel(IList<ParData> pardata)
         {
             Excel.Application ExcelApp;
@@ -119,7 +138,7 @@ namespace Jell.DataLogger.Gui.Windows
             {
                 ExcelApp = new Excel.Application();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -143,17 +162,8 @@ namespace Jell.DataLogger.Gui.Windows
             }
             ExcelApp.Columns.AutoFit();
             ExcelApp.Visible = true;
-          
-        }
-        private MenuItem[] GetConnectedMenuItems()
-        {
-            return new MenuItem[] { menuDisconnect, menuRecordNewData, menuExportToExcel };
-        }
-        private MenuItem[] GetDisconnectedMenuItems()
-        {
-            return new MenuItem[] { menuConnect };
-        }
 
+        }
 
         //Buttons
         private void menuConnect_Click(object sender, RoutedEventArgs e)
@@ -182,9 +192,9 @@ namespace Jell.DataLogger.Gui.Windows
             RecordDataWindow.ShowDialog();
         }
 
-        private void menuExportToExcel_Click(object sender, RoutedEventArgs e)
+        private void menuExportToCsv_Click(object sender, RoutedEventArgs e)
         {
-            ExportToExcel(ParData);
+            CsvExporter.Export(ParData);
         }
     }
 }

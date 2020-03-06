@@ -41,8 +41,12 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Win32, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.1.0.0\lib\net40\Microsoft.Win32.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,8 +75,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Services\CsvExporter.cs" />
+    <Compile Include="Services\CsvStringFormatter.cs" />
     <Compile Include="Services\DataParser.cs" />
     <Compile Include="Services\ExcelExporter.cs" />
+    <Compile Include="Services\ParXmlFormatter.cs" />
     <Compile Include="ViewModels\DataTableViewModel.cs" />
     <Compile Include="ViewModels\DisconnectedViewModel.cs" />
     <Compile Include="ViewModels\GraphViewModel.cs" />

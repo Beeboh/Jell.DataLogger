@@ -19,12 +19,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Time, StringFormat='yyyy-MM-dd'}" Header="Date" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Time, StringFormat='HH:mm:ss'}" Header="Time" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sensor1.ParValue}" Header="S1" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sensor2.ParValue}" Header="S2" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sensor3.ParValue}" Header="S3" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sensor4.ParValue}" Header="S4" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sensor5.ParValue}" Header="S5" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sensor6.ParValue}" Header="S6" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sensor1.ParValue, StringFormat='0'}" Header="S1" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sensor2.ParValue, StringFormat='0'}" Header="S2" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sensor3.ParValue, StringFormat='0'}" Header="S3" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sensor4.ParValue, StringFormat='0'}" Header="S4" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sensor5.ParValue, StringFormat='0'}" Header="S5" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sensor6.ParValue, StringFormat='0'}" Header="S6" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

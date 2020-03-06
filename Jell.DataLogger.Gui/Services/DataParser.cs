@@ -35,18 +35,18 @@ namespace Jell.DataLogger.Gui.Services
                 int second = Convert.ToInt32(datapoint.Attribute("second").Value);
                 DateTime time = new DateTime(year, month, day, hour, minute, second);
 
-                double voltage1 = Convert.ToInt32(datapoint.Element("Voltage1").Value);
-                double voltage2 = Convert.ToInt32(datapoint.Element("Voltage2").Value);
-                double voltage3 = Convert.ToInt32(datapoint.Element("Voltage3").Value);
-                double voltage4 = Convert.ToInt32(datapoint.Element("Voltage4").Value);
-                double voltage5 = Convert.ToInt32(datapoint.Element("Voltage5").Value);
-                double voltage6 = Convert.ToInt32(datapoint.Element("Voltage6").Value);
-                SensorRecording sensor1 = new SensorRecording(voltage1);
-                SensorRecording sensor2 = new SensorRecording(voltage2);
-                SensorRecording sensor3 = new SensorRecording(voltage3);
-                SensorRecording sensor4 = new SensorRecording(voltage4);
-                SensorRecording sensor5 = new SensorRecording(voltage5);
-                SensorRecording sensor6 = new SensorRecording(voltage6);
+                int adc1 = Convert.ToInt32(datapoint.Element("ADC1").Value);
+                int adc2 = Convert.ToInt32(datapoint.Element("ADC2").Value);
+                int adc3 = Convert.ToInt32(datapoint.Element("ADC3").Value);
+                int adc4 = Convert.ToInt32(datapoint.Element("ADC4").Value);
+                int adc5 = Convert.ToInt32(datapoint.Element("ADC5").Value);
+                int adc6 = Convert.ToInt32(datapoint.Element("ADC6").Value);
+                SensorRecording sensor1 = new SensorRecording(adc1);
+                SensorRecording sensor2 = new SensorRecording(adc2);
+                SensorRecording sensor3 = new SensorRecording(adc3);
+                SensorRecording sensor4 = new SensorRecording(adc4);
+                SensorRecording sensor5 = new SensorRecording(adc5);
+                SensorRecording sensor6 = new SensorRecording(adc6);
                 ParData ParDataPoint = new ParData(time, sensor1, sensor2, sensor3, sensor4, sensor5, sensor6);
                 ParDataPoints.Add(ParDataPoint);
             }

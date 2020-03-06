@@ -32,7 +32,7 @@
                 <MenuItem Name="menuRecordNewData" Header="Record New Data" Click="menuRecordNewData_Click"/>
             </MenuItem>
             <MenuItem Header="_Export">
-                <MenuItem Name="menuExportToExcel" Header="Export to Excel" Click="menuExportToExcel_Click"/>
+                <MenuItem Name="menuExportToCsv" Header="Export to .csv" Click="menuExportToCsv_Click"/>
             </MenuItem>
         </Menu>
         <Grid>
