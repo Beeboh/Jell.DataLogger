@@ -11,7 +11,7 @@ namespace Jell.DataLogger.Gui.Services
     {
         public CsvExporter(IEnumerable<ParData> ParData)
         {
-
+            
         }
     }
 }

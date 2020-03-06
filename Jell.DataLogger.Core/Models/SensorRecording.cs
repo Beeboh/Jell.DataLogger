@@ -8,10 +8,10 @@ namespace Jell.DataLogger.Core.Models
 {
     public class SensorRecording
     {
-        public SensorRecording(double voltage)
+        public SensorRecording(int ADCvalue)
         {
-            Voltage = voltage;
-            ParValue = VoltagePARConverter.VtoPAR(voltage);
+            Voltage = ADCVoltageConverter.ADCtoV(ADCvalue);
+            ParValue = VoltagePARConverter.VtoPAR(Voltage);
         }
         public double Voltage { get; }
         public double ParValue { get; }
@@ -35,6 +35,17 @@ namespace Jell.DataLogger.Core.Models
                 return PAR / 5;
             }
             
+        }
+        private static class ADCVoltageConverter
+        {
+            public static double ADCtoV(int ADCvalue)
+            {
+                return ADCvalue / 4095;
+            }
+            public static double ADCtoMV(int ADCvalue)
+            {
+                return ADCvalue / 4095 * 1000;
+            }
         }
         
 

@@ -35,12 +35,12 @@ namespace Jell.DataLogger.Gui.Services
                 int second = Convert.ToInt32(datapoint.Attribute("second").Value);
                 DateTime time = new DateTime(year, month, day, hour, minute, second);
 
-                double voltage1 = Convert.ToDouble(datapoint.Element("Voltage1").Value);
-                double voltage2 = Convert.ToDouble(datapoint.Element("Voltage2").Value);
-                double voltage3 = Convert.ToDouble(datapoint.Element("Voltage3").Value);
-                double voltage4 = Convert.ToDouble(datapoint.Element("Voltage4").Value);
-                double voltage5 = Convert.ToDouble(datapoint.Element("Voltage5").Value);
-                double voltage6 = Convert.ToDouble(datapoint.Element("Voltage6").Value);
+                double voltage1 = Convert.ToInt32(datapoint.Element("Voltage1").Value);
+                double voltage2 = Convert.ToInt32(datapoint.Element("Voltage2").Value);
+                double voltage3 = Convert.ToInt32(datapoint.Element("Voltage3").Value);
+                double voltage4 = Convert.ToInt32(datapoint.Element("Voltage4").Value);
+                double voltage5 = Convert.ToInt32(datapoint.Element("Voltage5").Value);
+                double voltage6 = Convert.ToInt32(datapoint.Element("Voltage6").Value);
                 SensorRecording sensor1 = new SensorRecording(voltage1);
                 SensorRecording sensor2 = new SensorRecording(voltage2);
                 SensorRecording sensor3 = new SensorRecording(voltage3);
