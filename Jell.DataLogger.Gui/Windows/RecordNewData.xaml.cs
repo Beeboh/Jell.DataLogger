@@ -416,7 +416,6 @@ namespace Jell.DataLogger.Gui.Windows
                 case MessageBoxResult.OK:
                     LoggerParameters = new LoggerParameters(StartDateTime, EndDateTime, samplingRate);
                     ParametersCompleted = true;
-                    MessageBox.Show($"               Parameters Set!\n\n Start Time: {StartDateTime.ToShortDateString()} {StartDateTime.ToShortTimeString()}\n End Time: {EndDateTime.ToShortDateString()} {EndDateTime.ToShortTimeString()}\n Sampling Rate: Δt = {samplingRate}s");
                     break;
                 case MessageBoxResult.Cancel:
                     break;

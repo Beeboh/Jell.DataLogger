@@ -206,7 +206,15 @@ namespace Jell.DataLogger.Gui.Windows
             RecordDataWindow.ShowDialog();
             if (RecordDataWindow.ParametersCompleted)
             {
-                SendParameters(portName, RecordDataWindow.LoggerParameters.StartDateTime, RecordDataWindow.LoggerParameters.EndDateTime, RecordDataWindow.LoggerParameters.samplingRate);
+                try
+                {
+                    SendParameters(portName, RecordDataWindow.LoggerParameters.StartDateTime, RecordDataWindow.LoggerParameters.EndDateTime, RecordDataWindow.LoggerParameters.samplingRate);
+                    MessageBox.Show($"               Parameters Set!\n\n Start Time: {RecordDataWindow.LoggerParameters.StartDateTime.ToShortDateString()} {RecordDataWindow.LoggerParameters.StartDateTime.ToShortTimeString()}\n End Time: {RecordDataWindow.LoggerParameters.EndDateTime.ToShortDateString()} {RecordDataWindow.LoggerParameters.EndDateTime.ToShortTimeString()}\n Sampling Rate: Δt = {RecordDataWindow.LoggerParameters.samplingRate}s");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show($"Failed to program device.\n\nMessage: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
