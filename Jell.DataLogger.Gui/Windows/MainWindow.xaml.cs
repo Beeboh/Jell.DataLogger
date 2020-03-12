@@ -29,6 +29,8 @@ namespace Jell.DataLogger.Gui.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        ParameterStringFormatter ParameterStringFormatter { get; } = new ParameterStringFormatter();
+        private string portName { get; set; }
         
         private bool _connectedmode;
         private bool ConnectedMode
@@ -49,7 +51,7 @@ namespace Jell.DataLogger.Gui.Windows
         }
         private MenuItem[] ConnectedMenuItems { get; }
         private MenuItem[] DisconnectedMenuItems { get; }
-        private ReadOnlyCollection<ParData> ParData { get; set; }
+        private LoggerInfo LoggerInfo { get; set; }
         private CsvExporter CsvExporter { get; } = new CsvExporter();
 
         //{
@@ -70,36 +72,35 @@ namespace Jell.DataLogger.Gui.Windows
         }
         private void Connect(string portName)
         {
-            //Delete this eventually
-            ParDataGenerator DataGenerator = new ParDataGenerator();
-            ReadOnlyCollection<ParData> RandomlyGeneratedData = DataGenerator.Generate(DateTime.Now, 1000, 5);
-
             try
             {
                 SerialPort port = new SerialPort(portName, 9600);
                 port.DtrEnable = true;
-                port.ReadTimeout = 5000;
-                port.WriteTimeout = 5000;
+                port.ReadTimeout = 10000;
+                port.WriteTimeout = 10000;
                 port.Open();
                 port.WriteLine("0001");
                 string datastring = null;
                 try
                 {
-                    ParXmlFormatter parXmlFormatter = new ParXmlFormatter();
-                    datastring = parXmlFormatter.GetString(RandomlyGeneratedData);
 
-                    //datastring = port.ReadLine();
+                    //DataGenerator//
+                    //LoggerInfoGenerator DataGenerator = new LoggerInfoGenerator();
+                    //datastring = DataGenerator.GenerateDataString(DateTime.Now, 1000, 10);
+
+                    //USB
+                    datastring = port.ReadLine();
                     port.Close();
                     DataParser dataParser = new DataParser();
                     try
                     {
-                        ParData = dataParser.Parse(datastring);
-                        DataContext = new DataTableViewModel(ParData);
+                        LoggerInfo = dataParser.Parse(datastring);
+                        DataContext = new DataTableViewModel(LoggerInfo);
                         ConnectedMode = true;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error Parsing device data.\n\n Message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Error parsing device data.\n\n Message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (TimeoutException ex)
@@ -117,9 +118,21 @@ namespace Jell.DataLogger.Gui.Windows
         }
         private void Disconnect()
         {
-            DataContext = new DisconnectedViewModel();
-            ParData = null;
+            portName = null;
+            LoggerInfo = null;
             ConnectedMode = false;
+            DataContext = new DisconnectedViewModel();
+        }
+        private void SendParameters(string portName, DateTime starttime, DateTime endtime, int samplerate)
+        {
+            SerialPort port = new SerialPort(portName, 9600);
+            port.DtrEnable = true;
+            port.ReadTimeout = 5000;
+            port.WriteTimeout = 5000;
+            string parameterstring = ParameterStringFormatter.GetParameterString(starttime, endtime, samplerate);
+            port.Open();
+            port.WriteLine(parameterstring);
+            port.Close();
         }
 
         private MenuItem[] GetConnectedMenuItems()
@@ -172,6 +185,7 @@ namespace Jell.DataLogger.Gui.Windows
             connectionWindow.ShowDialog();
             if (connectionWindow.WasCompleted)
             {
+                portName = connectionWindow.PortName;
                 Connect(connectionWindow.PortName);
             }
                 
@@ -190,11 +204,15 @@ namespace Jell.DataLogger.Gui.Windows
         {
             RecordNewData RecordDataWindow = new RecordNewData();
             RecordDataWindow.ShowDialog();
+            if (RecordDataWindow.ParametersCompleted)
+            {
+                SendParameters(portName, RecordDataWindow.LoggerParameters.StartDateTime, RecordDataWindow.LoggerParameters.EndDateTime, RecordDataWindow.LoggerParameters.samplingRate);
+            }
         }
 
         private void menuExportToCsv_Click(object sender, RoutedEventArgs e)
         {
-            CsvExporter.Export(ParData);
+            CsvExporter.Export(LoggerInfo.ParData);
         }
     }
 }

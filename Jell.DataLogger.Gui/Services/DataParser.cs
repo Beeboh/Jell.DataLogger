@@ -11,19 +11,23 @@ namespace Jell.DataLogger.Gui.Services
 {
     public class DataParser
     {
-        public DataParser()
-        {
 
-        }
-        public ReadOnlyCollection<ParData> Parse(string datastring)
+        public LoggerInfo Parse(string datastring)
         {
-            string RootTagStart = "<DataPoints>";
-            string RootTagEnd = "</DataPoints>";
+            string RootTagStart = "<LoggerInfo>";
+            string RootTagEnd = "</LoggerInfo>";
             
             string XMLdatastring = RootTagStart + datastring + RootTagEnd;
             XElement doc = XElement.Parse(XMLdatastring);
-            IEnumerable<XElement> datapoints = doc.Elements("Data");
 
+            //fix
+            //List<XElement> BatteryVoltages = doc.Elements("BatteryVoltage").ToList();
+            //List<XElement> BatteryPercentages = doc.Elements("BatteryPercent").ToList();
+            
+            double batteryvoltage = Convert.ToDouble(doc.Element("BatteryVoltage").Value);
+            double batterypercentage = Convert.ToDouble(doc.Element("BatteryPercent").Value);
+
+            IEnumerable<XElement> datapoints = doc.Elements("Data");
             List<ParData> ParDataPoints = new List<ParData>();
             foreach (XElement datapoint in datapoints)
             {
@@ -50,7 +54,8 @@ namespace Jell.DataLogger.Gui.Services
                 ParData ParDataPoint = new ParData(time, sensor1, sensor2, sensor3, sensor4, sensor5, sensor6);
                 ParDataPoints.Add(ParDataPoint);
             }
-            return ParDataPoints.AsReadOnly();
+
+            return new LoggerInfo(ParDataPoints, batteryvoltage, batterypercentage);
         }
     }
 }

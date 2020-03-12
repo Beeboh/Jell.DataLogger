@@ -10,7 +10,7 @@ namespace Jell.DataLogger.Gui.ViewModels
 {
     public class DataTableViewModel
     {
-        public ReadOnlyCollection<ParData> ParData { get; private set; }
+        public LoggerInfo LoggerInfo { get; private set; }
 
         //Delete these if can't get data binding to work
         public string DateColumnHeader => "Date";
@@ -22,9 +22,9 @@ namespace Jell.DataLogger.Gui.ViewModels
         public string Sensor5ColumnHeader => "S5";
         public string Sensor6ColumnHeader => "S6";
 
-        public DataTableViewModel(IEnumerable<ParData> pardata)
+        public DataTableViewModel(LoggerInfo loggerinfo)
         {
-            ParData = new List<ParData>(pardata).AsReadOnly();
+            LoggerInfo = loggerinfo;
         }
     }
 }

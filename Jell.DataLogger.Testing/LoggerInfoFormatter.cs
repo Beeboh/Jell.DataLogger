@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Jell.DataLogger.Core.Models;
 
-namespace Jell.DataLogger.Gui.Services
+namespace Jell.DataLogger.Testing
 {
-    public class ParXmlFormatter
+    internal class LoggerInfoFormatter
     {
-        public string GetString(IEnumerable<ParData> ParData)
+        public string GetString(LoggerInfo loggerinfo)
         {
             StringBuilder sb = new StringBuilder();
-            foreach(ParData data in ParData)
+            foreach(ParData data in loggerinfo.ParData)
             {
                 sb.Append($"<Data year='{data.Time.Year}' month='{data.Time.Month}' day='{data.Time.Day}' hour='{data.Time.Hour}' minute='{data.Time.Minute}' second='{data.Time.Second}'>");
                 sb.Append($"<ADC1>{data.Sensor1.ADC}</ADC1>");
@@ -23,8 +23,9 @@ namespace Jell.DataLogger.Gui.Services
                 sb.Append($"<ADC6>{data.Sensor6.ADC}</ADC6>");
                 sb.Append($"</Data>");
             }
+            sb.Append($"<BatteryVoltage>{loggerinfo.BatteryVoltage}</BatteryVoltage>");
+            sb.Append($"<BatteryPercent>{loggerinfo.BatteryPercent}</BatteryPercent>");
             return sb.ToString();
         }
-
     }
 }

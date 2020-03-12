@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\LoggerInfo.cs" />
     <Compile Include="Models\ParData.cs" />
     <Compile Include="Models\SensorRecording.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

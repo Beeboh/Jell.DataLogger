@@ -77,8 +77,7 @@
     <Compile Include="Services\CsvExporter.cs" />
     <Compile Include="Services\CsvStringFormatter.cs" />
     <Compile Include="Services\DataParser.cs" />
-    <Compile Include="Services\ExcelExporter.cs" />
-    <Compile Include="Services\ParXmlFormatter.cs" />
+    <Compile Include="Services\ParameterStringFormatter.cs" />
     <Compile Include="ViewModels\DataTableViewModel.cs" />
     <Compile Include="ViewModels\DisconnectedViewModel.cs" />
     <Compile Include="ViewModels\GraphViewModel.cs" />

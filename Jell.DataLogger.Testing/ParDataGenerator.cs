@@ -11,14 +11,11 @@ namespace Jell.DataLogger.Testing
     /// <summary>
     /// Generates random par data based on the given input parameters. The voltages range 0 and 5V and the PAR values range from 0 to 100
     /// </summary>
-    public class ParDataGenerator
+    internal class ParDataGenerator
     {
-        private Random Random { get; }
-        public ParDataGenerator()
-        {
-            Random = new Random();
-        }
-        public ReadOnlyCollection<ParData> Generate(DateTime starttime, int numberofpoints, int secondsinterval)
+        private Random Random { get; } = new Random();
+
+        public LoggerInfo Generate(DateTime starttime, int numberofpoints, int secondsinterval)
         {
             List<ParData> DataCollection = new List<ParData>();
             for (int i = 0; i<numberofpoints; i++)
@@ -33,7 +30,10 @@ namespace Jell.DataLogger.Testing
                 ParData Data = new ParData(time, sensor1, sensor2, sensor3, sensor4, sensor5, sensor6);
                 DataCollection.Add(Data);
             }
-            return DataCollection.AsReadOnly();
+            double batteryVoltage = Random.NextDouble() * 3.2;
+            double batteryPercent = batteryVoltage / 3.2 * 100;
+            LoggerInfo loggerInfo = new LoggerInfo(DataCollection, batteryVoltage, batteryPercent);
+            return loggerInfo;
         }
     }
 }
