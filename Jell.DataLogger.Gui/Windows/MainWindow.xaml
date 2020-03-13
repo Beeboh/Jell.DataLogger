@@ -17,6 +17,9 @@
         <DataTemplate  x:Name="DisconnectedViewTemplate" DataType="{x:Type viewmodels:DisconnectedViewModel}">
             <views:DisconnectedView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate  x:Name="GraphViewTemplate" DataType="{x:Type viewmodels:GraphViewModel}">
+            <views:GraphView DataContext="{Binding}"/>
+        </DataTemplate>
         
     </Window.Resources>
     <DockPanel>

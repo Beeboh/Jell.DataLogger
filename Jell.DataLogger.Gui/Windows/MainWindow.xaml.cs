@@ -29,10 +29,18 @@ namespace Jell.DataLogger.Gui.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        ParameterStringFormatter ParameterStringFormatter { get; } = new ParameterStringFormatter();
-        private string portName { get; set; }
-        
         private bool _connectedmode;
+
+
+        private MenuItem[] ConnectedMenuItems { get; }
+        private MenuItem[] DisconnectedMenuItems { get; }
+        private CsvExporter CsvExporter { get; } = new CsvExporter();
+        private ParameterStringFormatter ParameterStringFormatter { get; } = new ParameterStringFormatter();
+
+        private string portName { get; set; }
+        private LoggerInfo LoggerInfo { get; set; }
+        private GraphViewModel GraphView { get; set; }
+        private DataTableViewModel DataTableView { get; set; }
         private bool ConnectedMode
         {
             get { return _connectedmode; }
@@ -42,26 +50,13 @@ namespace Jell.DataLogger.Gui.Windows
                 {
                     connectedmenuitem.IsEnabled = value;
                 }
-                foreach(MenuItem disconnectedmenuitem in DisconnectedMenuItems)
+                foreach (MenuItem disconnectedmenuitem in DisconnectedMenuItems)
                 {
                     disconnectedmenuitem.IsEnabled = !value;
                 }
                 _connectedmode = value;
             }
         }
-        private MenuItem[] ConnectedMenuItems { get; }
-        private MenuItem[] DisconnectedMenuItems { get; }
-        private LoggerInfo LoggerInfo { get; set; }
-        private CsvExporter CsvExporter { get; } = new CsvExporter();
-
-        //{
-        //    get { return _connectedmode; }
-        //    set
-        //    {
-        //        _connectedmode = value;
-        //        OnPropertyChanged("ConnectedMode");
-        //    }
-        //}
 
         public MainWindow()
         {
@@ -86,7 +81,7 @@ namespace Jell.DataLogger.Gui.Windows
 
                     //DataGenerator//
                     //LoggerInfoGenerator DataGenerator = new LoggerInfoGenerator();
-                    //datastring = DataGenerator.GenerateDataString(DateTime.Now, 1000, 10);
+                    //datastring = DataGenerator.GenerateDataString(DateTime.Now, 1000, 3600);
 
                     //USB
                     datastring = port.ReadLine();
@@ -95,7 +90,9 @@ namespace Jell.DataLogger.Gui.Windows
                     try
                     {
                         LoggerInfo = dataParser.Parse(datastring);
-                        DataContext = new DataTableViewModel(LoggerInfo);
+                        DataTableView = new DataTableViewModel(LoggerInfo);
+                        GraphView = new GraphViewModel(LoggerInfo);
+                        DataContext = DataTableView;
                         ConnectedMode = true;
                     }
                     catch (Exception ex)
@@ -113,13 +110,13 @@ namespace Jell.DataLogger.Gui.Windows
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            
         }
         private void Disconnect()
         {
             portName = null;
             LoggerInfo = null;
+            GraphView = null;
+            DataTableView = null;
             ConnectedMode = false;
             DataContext = new DisconnectedViewModel();
         }
@@ -206,14 +203,15 @@ namespace Jell.DataLogger.Gui.Windows
             RecordDataWindow.ShowDialog();
             if (RecordDataWindow.ParametersCompleted)
             {
+                LoggerParameters LoggerParameters = RecordDataWindow.LoggerParameters;
                 try
                 {
-                    SendParameters(portName, RecordDataWindow.LoggerParameters.StartDateTime, RecordDataWindow.LoggerParameters.EndDateTime, RecordDataWindow.LoggerParameters.samplingRate);
-                    MessageBox.Show($"               Parameters Set!\n\n Start Time: {RecordDataWindow.LoggerParameters.StartDateTime.ToShortDateString()} {RecordDataWindow.LoggerParameters.StartDateTime.ToShortTimeString()}\n End Time: {RecordDataWindow.LoggerParameters.EndDateTime.ToShortDateString()} {RecordDataWindow.LoggerParameters.EndDateTime.ToShortTimeString()}\n Sampling Rate: Δt = {RecordDataWindow.LoggerParameters.samplingRate}s");
+                    SendParameters(portName, LoggerParameters.StartDateTime, LoggerParameters.EndDateTime, LoggerParameters.SamplingRate);
+                    MessageBox.Show($"               Parameters Set!\n\n Start Time: {LoggerParameters.StartDateTime.ToString("yyyy-MM-dd HH:mm tt")}\n End Time: {LoggerParameters.EndDateTime.ToString("yyyy-MM-dd HH:mm tt")}\n Sampling Rate: Δt = {LoggerParameters.SamplingRate}s");
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show($"Failed to program device.\n\nMessage: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Failed to program device.\n\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

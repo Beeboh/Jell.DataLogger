@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Jell.DataLogger.Gui.Views"
-             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <wpf:CartesianChart Series="{Binding ParSeriesCollection}" LegendLocation="Right">
-            <wpf:CartesianChart.AxisY>
-                <wpf:Axis Title="PAR"/>
-            </wpf:CartesianChart.AxisY>
-            <wpf:CartesianChart.AxisX>
-                <wpf:Axis Title="Time" Labels="{Binding XValues}"/>
-            </wpf:CartesianChart.AxisX>
-        </wpf:CartesianChart>
+        <lvc:CartesianChart Series="{Binding ParSeriesCollection}" LegendLocation="Right" Hoverable="True" DisableAnimations="True">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="PAR"/>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Time" LabelFormatter="{Binding Formatter}"/>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
     </Grid>
 </UserControl>

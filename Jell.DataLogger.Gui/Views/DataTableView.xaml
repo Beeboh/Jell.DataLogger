@@ -26,6 +26,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Battery Percentage:"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggerInfo.BatteryPercent, StringFormat='0'}"/>
             </Grid>
+            
 
 
         </StackPanel>

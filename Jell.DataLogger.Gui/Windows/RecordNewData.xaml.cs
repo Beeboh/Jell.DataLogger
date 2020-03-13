@@ -22,13 +22,13 @@ namespace Jell.DataLogger.Gui.Windows
     {
         public DateTime StartDateTime { get; }
         public DateTime EndDateTime { get; }
-        public int samplingRate { get; }
+        public int SamplingRate { get; }
 
         public LoggerParameters(DateTime _StartDateTime, DateTime _EndDateTime, int _SamplingRate)
         {
             StartDateTime = _StartDateTime;
             EndDateTime = _EndDateTime;
-            samplingRate = _SamplingRate;
+            SamplingRate = _SamplingRate;
         }
 
     }
