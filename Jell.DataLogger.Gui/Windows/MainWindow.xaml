@@ -31,6 +31,10 @@
                 <MenuItem Name="menuConnect"  Header="Connect" Click="menuConnect_Click" IsEnabled="{Binding Disconnected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <MenuItem Name="menuDisconnect" Header="Disconnect" Click="menuDisconnect_Click"/>
             </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Name="menuTableView" Header="Table" Click="menuTableView_Click"/>
+                <MenuItem Name="menuGraphView" Header="Graph" Click="menuGraphView_Click"/>
+            </MenuItem>
             <MenuItem Header="_Record">
                 <MenuItem Name="menuRecordNewData" Header="Record New Data" Click="menuRecordNewData_Click"/>
             </MenuItem>

@@ -61,7 +61,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ParMeasurement.cs" />
+    <Compile Include="Interfaces\IConnectedViewModel.cs" />
+    <Compile Include="Interfaces\IDisconnectedViewModel.cs" />
+    <Compile Include="Interfaces\IViewModel.cs" />
+    <Compile Include="Models\ParSeriesPoint.cs" />
+    <Compile Include="Models\ViewableParData.cs" />
+    <Compile Include="Models\ViewableSensorRecording.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -75,10 +80,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Services\CsvExporter.cs" />
-    <Compile Include="Services\CsvStringFormatter.cs" />
-    <Compile Include="Services\DataParser.cs" />
-    <Compile Include="Services\ParameterStringFormatter.cs" />
+    <Compile Include="Services\LoggerCommandService.cs" />
+    <Compile Include="Services\CsvExportService.cs" />
+    <Compile Include="Formatters\CsvStringFormatter.cs" />
+    <Compile Include="Parsers\DataParser.cs" />
+    <Compile Include="Builders\ParSeriesBuilder.cs" />
+    <Compile Include="Formatters\ParameterStringFormatter.cs" />
+    <Compile Include="Adapters\ViewableParAdapter.cs" />
     <Compile Include="ViewModels\DataTableViewModel.cs" />
     <Compile Include="ViewModels\DisconnectedViewModel.cs" />
     <Compile Include="ViewModels\GraphViewModel.cs" />
@@ -115,6 +123,10 @@
       <Project>{0ed61d0c-bd8d-4ae2-bc6d-864de19efaf0}</Project>
       <Name>Jell.DataLogger.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Jell.DataLogger.Shared\Jell.DataLogger.Shared.csproj">
+      <Project>{43896e30-b9c9-4215-96ec-dbf6e8e8bf63}</Project>
+      <Name>Jell.DataLogger.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jell.DataLogger.Testing\Jell.DataLogger.Testing.csproj">
       <Project>{1ea8ef4d-f036-475b-a216-f0b56c937286}</Project>
       <Name>Jell.DataLogger.Testing</Name>
@@ -146,5 +158,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

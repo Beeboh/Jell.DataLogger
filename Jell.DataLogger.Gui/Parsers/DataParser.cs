@@ -7,9 +7,9 @@ using Jell.DataLogger.Core.Models;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
 
-namespace Jell.DataLogger.Gui.Services
+namespace Jell.DataLogger.Gui.Parsers
 {
-    public class DataParser
+    internal class DataParser
     {
 
         public LoggerInfo Parse(string datastring)

@@ -7,30 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Battery Voltage:"/>
-                <TextBlock Grid.Row="0" Grid.Column="1"  Text="{Binding LoggerInfo.BatteryVoltage, StringFormat='0.00'}"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Battery Percentage:"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggerInfo.BatteryPercent, StringFormat='0'}"/>
-            </Grid>
-            
-
-
-        </StackPanel>
-        <DataGrid x:Name="ParData" ItemsSource="{Binding LoggerInfo.ParData}" Grid.Column="1" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" AlternatingRowBackground="LightGray">
+        <DataGrid x:Name="ParData" ItemsSource="{Binding ParData}" Grid.Column="1" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" AlternatingRowBackground="LightGray">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Time, StringFormat='yyyy-MM-dd'}" Header="Date" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Time, StringFormat='HH:mm:ss'}" Header="Time" Width="*"/>

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Jell.DataLogger.Gui.Models
 {
-    public class ParMeasurement
+    public class ParSeriesPoint
     {
-        public ParMeasurement(DateTime time, double par)
+        public ParSeriesPoint(DateTime time, double par)
         {
             Time = time;
             ParValue = par;

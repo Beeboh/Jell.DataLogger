@@ -62,7 +62,8 @@ namespace Jell.DataLogger.Gui.Windows
 
         public LoggerParameters LoggerParameters { get; private set; }
         public bool ParametersCompleted { get; private set; } = false;
-        public RecordNewData()
+
+        public RecordNewData(double batteryvoltage, double batterypercent)
         {
             InitializeComponent();
 
@@ -416,12 +417,12 @@ namespace Jell.DataLogger.Gui.Windows
                 case MessageBoxResult.OK:
                     LoggerParameters = new LoggerParameters(StartDateTime, EndDateTime, samplingRate);
                     ParametersCompleted = true;
+                    Close();
                     break;
                 case MessageBoxResult.Cancel:
                     break;
 
             }
-            Close();
         }
         private void btnCancel(object sender, RoutedEventArgs e)
         {

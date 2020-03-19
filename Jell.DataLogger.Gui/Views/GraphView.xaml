@@ -10,10 +10,10 @@
     <Grid>
         <lvc:CartesianChart Series="{Binding ParSeriesCollection}" LegendLocation="Right" Hoverable="True" DisableAnimations="True">
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="PAR"/>
+                <lvc:Axis Title="PAR" MinValue="0" MaxValue="5000"/>
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" LabelFormatter="{Binding Formatter}"/>
+                <lvc:Axis Title="Time" LabelFormatter="{Binding Formatter}" MinValue="{Binding StartTime}" MaxValue="{Binding EndTime}"/>
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
     </Grid>

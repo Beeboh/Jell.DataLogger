@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jell.DataLogger.Core.Models;
+using Jell.DataLogger.Gui.Models;
+using Jell.DataLogger.Gui.Adapters;
+using Jell.DataLogger.Gui.Interfaces;
 
 namespace Jell.DataLogger.Gui.ViewModels
 {
-    public class DataTableViewModel
+    public class DataTableViewModel : IViewModel
     {
-        public LoggerInfo LoggerInfo { get; private set; }
+        public ReadOnlyCollection<ViewableParData> ParData { get; private set; }
 
         //Delete these if can't get data binding to work
         public string DateColumnHeader => "Date";
@@ -22,9 +25,9 @@ namespace Jell.DataLogger.Gui.ViewModels
         public string Sensor5ColumnHeader => "S5";
         public string Sensor6ColumnHeader => "S6";
 
-        public DataTableViewModel(LoggerInfo loggerinfo)
+        public DataTableViewModel(IEnumerable<ViewableParData> data)
         {
-            LoggerInfo = loggerinfo;
+            ParData = new List<ViewableParData>(data).AsReadOnly();
         }
     }
 }

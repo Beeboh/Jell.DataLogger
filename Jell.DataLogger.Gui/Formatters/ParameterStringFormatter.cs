@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jell.DataLogger.Gui.Services
+namespace Jell.DataLogger.Gui.Formatters
 {
-    public class ParameterStringFormatter
+    internal class ParameterStringFormatter
     {
         public string GetParameterString(DateTime starttime, DateTime endtime, int samplerate)
         {

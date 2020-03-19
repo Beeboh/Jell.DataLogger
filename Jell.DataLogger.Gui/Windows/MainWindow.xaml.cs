@@ -16,11 +16,15 @@ using System.IO.Ports;
 using Excel = Microsoft.Office.Interop.Excel;
 using Jell.DataLogger.Gui.ViewModels;
 using Jell.DataLogger.Gui.Services;
+using Jell.DataLogger.Gui.Formatters;
 using Jell.DataLogger.Core.Models;
+using Jell.DataLogger.Core.Exceptions;
 using Jell.DataLogger.Testing; //remove eventually
 using System.Xml;
 using System.Xml.Linq;
-
+using Jell.DataLogger.Gui.Interfaces;
+using Jell.DataLogger.Gui.Models;
+using Jell.DataLogger.Gui.Adapters;
 
 namespace Jell.DataLogger.Gui.Windows
 {
@@ -31,16 +35,18 @@ namespace Jell.DataLogger.Gui.Windows
     {
         private bool _connectedmode;
 
-
         private MenuItem[] ConnectedMenuItems { get; }
         private MenuItem[] DisconnectedMenuItems { get; }
-        private CsvExporter CsvExporter { get; } = new CsvExporter();
-        private ParameterStringFormatter ParameterStringFormatter { get; } = new ParameterStringFormatter();
+        private CsvExportService CsvExporter { get; } = new CsvExportService();
+        private LoggerCommandService CommandService { get; set; }
+        private ViewableParAdapter ViewableParAdapter { get; set; } = new ViewableParAdapter();
 
-        private string portName { get; set; }
         private LoggerInfo LoggerInfo { get; set; }
+        private ReadOnlyCollection<ViewableParData> ViewableParData { get; set; }
+
         private GraphViewModel GraphView { get; set; }
         private DataTableViewModel DataTableView { get; set; }
+        private DisconnectedViewModel DisconnectedView { get; } = new DisconnectedViewModel();
         private bool ConnectedMode
         {
             get { return _connectedmode; }
@@ -67,112 +73,75 @@ namespace Jell.DataLogger.Gui.Windows
         }
         private void Connect(string portName)
         {
+            CommandService = new LoggerCommandService(portName);
             try
             {
-                SerialPort port = new SerialPort(portName, 9600);
-                port.DtrEnable = true;
-                port.ReadTimeout = 10000;
-                port.WriteTimeout = 10000;
-                port.Open();
-                port.WriteLine("0001");
-                string datastring = null;
+                //Data Generator//
+                LoggerInfoGenerator DataGenerator = new LoggerInfoGenerator();
+                LoggerInfo = DataGenerator.Generate(DateTime.Now, 10, 10);
+
+                //USB//
+                //LoggerInfo = CommandService.RequestLoggerInfo();
+                ViewableParData = ViewableParAdapter.GetViewableParDataList(LoggerInfo.ParData);
                 try
                 {
-
-                    //DataGenerator//
-                    //LoggerInfoGenerator DataGenerator = new LoggerInfoGenerator();
-                    //datastring = DataGenerator.GenerateDataString(DateTime.Now, 1000, 3600);
-
-                    //USB
-                    datastring = port.ReadLine();
-                    port.Close();
-                    DataParser dataParser = new DataParser();
-                    try
-                    {
-                        LoggerInfo = dataParser.Parse(datastring);
-                        DataTableView = new DataTableViewModel(LoggerInfo);
-                        GraphView = new GraphViewModel(LoggerInfo);
-                        DataContext = DataTableView;
-                        ConnectedMode = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error parsing device data.\n\n Message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    DataTableView = new DataTableViewModel(ViewableParData);
+                    GraphView = new GraphViewModel(ViewableParData);
+                    SetView(DataTableView);
                 }
-                catch (TimeoutException ex)
+                catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show($"Error loading data views.\n\nError message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch(Exception ex)
+            catch(ParsingException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error parsing datastring.\n\nError message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Disconnect()
         {
-            portName = null;
+            CommandService = null;
             LoggerInfo = null;
+            ViewableParData = null;
             GraphView = null;
             DataTableView = null;
             ConnectedMode = false;
-            DataContext = new DisconnectedViewModel();
+            SetView(DisconnectedView);
         }
-        private void SendParameters(string portName, DateTime starttime, DateTime endtime, int samplerate)
+        private void SetView(IViewModel viewmodel)
         {
-            SerialPort port = new SerialPort(portName, 9600);
-            port.DtrEnable = true;
-            port.ReadTimeout = 5000;
-            port.WriteTimeout = 5000;
-            string parameterstring = ParameterStringFormatter.GetParameterString(starttime, endtime, samplerate);
-            port.Open();
-            port.WriteLine(parameterstring);
-            port.Close();
+            DataContext = viewmodel;
+            if (viewmodel is DataTableViewModel)
+            {
+                ConnectedMode = true;
+                menuGraphView.IsEnabled = true;
+                menuTableView.IsEnabled = false;
+            }
+            else if (viewmodel is GraphViewModel)
+            {
+                ConnectedMode = true;
+                menuTableView.IsEnabled = true;
+                menuGraphView.IsEnabled = false;
+            }
+            else if(viewmodel is DisconnectedViewModel)
+            {
+                ConnectedMode = false;
+            }
         }
+        
 
         private MenuItem[] GetConnectedMenuItems()
         {
-            return new MenuItem[] { menuDisconnect, menuRecordNewData, menuExportToCsv };
+            return new MenuItem[] { menuDisconnect, menuRecordNewData, menuExportToCsv, menuTableView, menuGraphView };
         }
         private MenuItem[] GetDisconnectedMenuItems()
         {
             return new MenuItem[] { menuConnect };
         }
-        [Obsolete]
-        private void ExportToExcel(IList<ParData> pardata)
+        private IViewModel[] GetViewModels()
         {
-            Excel.Application ExcelApp;
-            try
-            {
-                ExcelApp = new Excel.Application();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            ExcelApp.Application.Workbooks.Add(Type.Missing);
-            string[] Headers = new string[] { "Date", "Time", "S1", "S2", "S3", "S4", "S5", "S6" };
-            for (int i = 0; i < Headers.Length; i++)
-            {
-                ExcelApp.Cells[1, i + 1] = Headers[i];
-            }
-            for (int i = 0; i < pardata.Count; i++)
-            {
-                ExcelApp.Cells[i + 2, 1] = pardata[i].Time.ToString("yyyy-MM-dd");
-                ExcelApp.Cells[i + 2, 2] = pardata[i].Time.ToString("hh:mm:ss");
-                ExcelApp.Cells[i + 2, 3] = pardata[i].Sensor1.ParValue;
-                ExcelApp.Cells[i + 2, 4] = pardata[i].Sensor2.ParValue;
-                ExcelApp.Cells[i + 2, 5] = pardata[i].Sensor3.ParValue;
-                ExcelApp.Cells[i + 2, 6] = pardata[i].Sensor4.ParValue;
-                ExcelApp.Cells[i + 2, 7] = pardata[i].Sensor5.ParValue;
-                ExcelApp.Cells[i + 2, 8] = pardata[i].Sensor6.ParValue;
-            }
-            ExcelApp.Columns.AutoFit();
-            ExcelApp.Visible = true;
-
+            return new IViewModel[] { DisconnectedView, DataTableView, GraphView };
         }
 
         //Buttons
@@ -182,7 +151,6 @@ namespace Jell.DataLogger.Gui.Windows
             connectionWindow.ShowDialog();
             if (connectionWindow.WasCompleted)
             {
-                portName = connectionWindow.PortName;
                 Connect(connectionWindow.PortName);
             }
                 
@@ -199,14 +167,14 @@ namespace Jell.DataLogger.Gui.Windows
 
         private void menuRecordNewData_Click(object sender, RoutedEventArgs e)
         {
-            RecordNewData RecordDataWindow = new RecordNewData();
+            RecordNewData RecordDataWindow = new RecordNewData(LoggerInfo.BatteryVoltage, LoggerInfo.BatteryPercent);
             RecordDataWindow.ShowDialog();
             if (RecordDataWindow.ParametersCompleted)
             {
                 LoggerParameters LoggerParameters = RecordDataWindow.LoggerParameters;
                 try
                 {
-                    SendParameters(portName, LoggerParameters.StartDateTime, LoggerParameters.EndDateTime, LoggerParameters.SamplingRate);
+                    CommandService.SetParameters(LoggerParameters.StartDateTime, LoggerParameters.EndDateTime, LoggerParameters.SamplingRate);
                     MessageBox.Show($"               Parameters Set!\n\n Start Time: {LoggerParameters.StartDateTime.ToString("yyyy-MM-dd HH:mm tt")}\n End Time: {LoggerParameters.EndDateTime.ToString("yyyy-MM-dd HH:mm tt")}\n Sampling Rate: Δt = {LoggerParameters.SamplingRate}s");
                 }
                 catch(Exception ex)
@@ -218,7 +186,17 @@ namespace Jell.DataLogger.Gui.Windows
 
         private void menuExportToCsv_Click(object sender, RoutedEventArgs e)
         {
-            CsvExporter.Export(LoggerInfo.ParData);
+            CsvExporter.Export(ViewableParData);
+        }
+
+        private void menuTableView_Click(object sender, RoutedEventArgs e)
+        {
+            SetView(DataTableView);
+        }
+
+        private void menuGraphView_Click(object sender, RoutedEventArgs e)
+        {
+            SetView(GraphView);
         }
     }
 }

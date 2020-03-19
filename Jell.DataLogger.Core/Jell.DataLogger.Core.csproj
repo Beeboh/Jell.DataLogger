@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ParsingException.cs" />
     <Compile Include="Models\LoggerInfo.cs" />
     <Compile Include="Models\ParData.cs" />
     <Compile Include="Models\SensorRecording.cs" />
@@ -47,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jell.DataLogger.Shared\Jell.DataLogger.Shared.csproj">
+      <Project>{43896e30-b9c9-4215-96ec-dbf6e8e8bf63}</Project>
+      <Name>Jell.DataLogger.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
