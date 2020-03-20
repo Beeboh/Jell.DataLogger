@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InvalidPortException.cs" />
     <Compile Include="Exceptions\ParsingException.cs" />
     <Compile Include="Models\LoggerInfo.cs" />
     <Compile Include="Models\ParData.cs" />

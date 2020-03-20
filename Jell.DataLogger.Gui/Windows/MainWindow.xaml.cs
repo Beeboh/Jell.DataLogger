@@ -77,14 +77,15 @@ namespace Jell.DataLogger.Gui.Windows
             try
             {
                 //Data Generator//
-                LoggerInfoGenerator DataGenerator = new LoggerInfoGenerator();
-                LoggerInfo = DataGenerator.Generate(DateTime.Now, 10, 10);
+                //LoggerInfoGenerator DataGenerator = new LoggerInfoGenerator();
+                //LoggerInfo = DataGenerator.Generate(DateTime.Now, 10, 10);
 
                 //USB//
-                //LoggerInfo = CommandService.RequestLoggerInfo();
-                ViewableParData = ViewableParAdapter.GetViewableParDataList(LoggerInfo.ParData);
+                LoggerInfo = CommandService.RequestLoggerInfo();
+
                 try
                 {
+                    ViewableParData = ViewableParAdapter.GetViewableParDataList(LoggerInfo.ParData);
                     DataTableView = new DataTableViewModel(ViewableParData);
                     GraphView = new GraphViewModel(ViewableParData);
                     SetView(DataTableView);
@@ -94,9 +95,9 @@ namespace Jell.DataLogger.Gui.Windows
                     MessageBox.Show($"Error loading data views.\n\nError message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch(ParsingException ex)
+            catch(Exception ex)
             {
-                MessageBox.Show($"Error parsing datastring.\n\nError message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Disconnect()

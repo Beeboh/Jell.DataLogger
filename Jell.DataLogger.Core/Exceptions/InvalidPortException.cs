@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Jell.DataLogger.Core.Exceptions
 {
-    public class ParsingException : Exception
+    public class InvalidPortException : Exception
     {
-        public override string Message => "Error parsing datastring.";
+        public override string Message => "Invalid port name.";
     }
 }

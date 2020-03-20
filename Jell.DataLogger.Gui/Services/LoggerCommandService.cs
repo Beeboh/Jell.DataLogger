@@ -23,15 +23,30 @@ namespace Jell.DataLogger.Gui.Services
         }
         public LoggerInfo RequestLoggerInfo()
         {
-            SerialPort port = GetSerialPort();
-
-            port.Open();
-            port.WriteLine("0001");
-            string datastring = port.ReadLine();
-            port.Close();
-            DataParser DataParser = new DataParser();
+            SerialPort port;
             try
             {
+                port = GetSerialPort();
+            }
+            catch
+            {
+                throw new InvalidPortException();
+            }
+            string datastring;
+            try
+            {
+                port.Open();
+                port.WriteLine("0001");
+                datastring = port.ReadLine();
+                port.Close();
+            }
+            catch
+            {
+                throw new TimeoutException();
+            }
+            try
+            {
+                DataParser DataParser = new DataParser();
                 return DataParser.Parse(datastring);
             }
             catch
@@ -39,6 +54,7 @@ namespace Jell.DataLogger.Gui.Services
                 throw new ParsingException();
             }
         }
+    
         public void SetParameters(DateTime starttime, DateTime endtime, int samplerate)
         {
             SerialPort port = GetSerialPort();
