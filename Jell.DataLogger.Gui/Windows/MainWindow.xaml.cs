@@ -71,7 +71,7 @@ namespace Jell.DataLogger.Gui.Windows
             DisconnectedMenuItems = GetDisconnectedMenuItems();
             Disconnect();
         }
-        private void Connect(string portName)
+        private bool Connect(string portName)
         {
             CommandService = new LoggerCommandService(portName);
             try
@@ -82,22 +82,25 @@ namespace Jell.DataLogger.Gui.Windows
 
                 //USB//
                 LoggerInfo = CommandService.RequestLoggerInfo();
-
-                try
-                {
-                    ViewableParData = ViewableParAdapter.GetViewableParDataList(LoggerInfo.ParData);
-                    DataTableView = new DataTableViewModel(ViewableParData);
-                    GraphView = new GraphViewModel(ViewableParData);
-                    SetView(DataTableView);
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show($"Error loading data views.\n\nError message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            try
+            {
+                ViewableParData = ViewableParAdapter.GetViewableParDataList(LoggerInfo.ParData);
+                DataTableView = new DataTableViewModel(ViewableParData);
+                GraphView = new GraphViewModel(ViewableParData);
+                SetView(DataTableView);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data views.\n\nError message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
         }
         private void Disconnect()

@@ -4,9 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jell.DataLogger.Core.Models;
 using Jell.DataLogger.Gui.Models;
-using Jell.DataLogger.Gui.Adapters;
 using Jell.DataLogger.Gui.Interfaces;
 
 namespace Jell.DataLogger.Gui.ViewModels

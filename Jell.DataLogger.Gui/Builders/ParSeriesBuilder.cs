@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
-using Jell.DataLogger.Core.Models;
 using Jell.DataLogger.Gui.Models;
-using System.Windows.Media;
 
 namespace Jell.DataLogger.Gui.Builders
 {

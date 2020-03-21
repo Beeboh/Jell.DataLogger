@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Configurations;
-using LiveCharts.Wpf;
-using Jell.DataLogger.Core.Models;
 using Jell.DataLogger.Gui.Models;
 using Jell.DataLogger.Gui.Builders;
-using Jell.DataLogger.Gui.Adapters;
 using Jell.DataLogger.Gui.Interfaces;
 
 namespace Jell.DataLogger.Gui.ViewModels

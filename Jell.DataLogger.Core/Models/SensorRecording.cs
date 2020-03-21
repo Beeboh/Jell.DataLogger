@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Jell.DataLogger.Shared.Utilities;
+﻿using Jell.DataLogger.Shared.Utilities;
 
 namespace Jell.DataLogger.Core.Models
 {
